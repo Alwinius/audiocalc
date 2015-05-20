@@ -1,86 +1,19 @@
 <?php
 
 include("mysqlc.php");
+include("backend/functions.inc.php");
 
-$content='<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!-- Trumbowyg css  -->
-    <link rel="stylesheet" href="js/trumbowyg/dist/ui/trumbowyg.min.css">
-    <!-- Custom styles for this template -->
-    <link href="css/mainpage.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->';
 
 function overview($username) {
-    $content="<title>" . $username . " - AudioCalc</title></head><body>";
-    $content.='<div class="modal fade" id="deletequestion">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Serious Question</h4>
-      </div>
-      <div class="modal-body">
-        <p>Do you really want do delete this entry from the database?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-primary" id="yesdel">Yes</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->';
-//    $content.='<!-- Fixed navbar -->
-//    <nav class="navbar navbar-default navbar-fixed-top">
-//      <div class="container">
-//        <div class="navbar-header">
-//          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-//            <span class="sr-only">Toggle navigation</span>
-//            <span class="icon-bar"></span>
-//            <span class="icon-bar"></span>
-//            <span class="icon-bar"></span>
-//          </button>
-//          <a class="navbar-brand" href="#">Project name</a>
-//        </div>
-//        <div id="navbar" class="collapse navbar-collapse">
-//          <ul class="nav navbar-nav">
-//            <li class="active"><a href="#">Home</a></li>
-//            <li><a href="#about">About</a></li>
-//            <li><a href="#contact">Contact</a></li>
-//            <li class="dropdown">
-//              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-//              <ul class="dropdown-menu" role="menu">
-//                <li><a href="#">Action</a></li>
-//                <li><a href="#">Another action</a></li>
-//                <li><a href="#">Something else here</a></li>
-//                <li class="divider"></li>
-//                <li class="dropdown-header">Nav header</li>
-//                <li><a href="#">Separated link</a></li>
-//                <li><a href="#">One more separated link</a></li>
-//              </ul>
-//            </li>
-//          </ul>
-//        </div><!--/.nav-collapse -->
-//      </div>
-//    </nav>';
+    $content=  createhead($_COOKIE["username"]);
+    $content.=createnav("dash");
     $content.='<!-- Begin page content -->
     <div class="container">
       <div class="page-header">
         <h1>Dashboard</h1>
       </div>
-      <p class="lead">Welcome, ' . $username . ' (<a href="logout.php">Logout</a>)<br/></p>';
+      <p class="lead">Welcome, ' . $username . ' <br/></p>';
     
     $content.='<h2>Worklog</h2><p>That\'s what you\'ve done so far:</p>';
     $content.='<p><table class="table table-striped audiolist"><thead><tr><th>&nbsp;&nbsp;&nbsp;Name</th><th>&nbsp;&nbsp;&nbsp;Duration</th><th>Worked Time</th><th>Finished (Hourly Rate - Date)</th><th>Actions</th></tr></thead><tbody>';
@@ -115,7 +48,23 @@ function overview($username) {
     $content.='<div class="container lastc"><h2>Notepad</h2><p>Notes are saved nearly in real time. Current status: <img src="icons/valid.png" alt="Saved" id="notestatus"/></p><div class="notepad"></div></div>';
     
     $content.= '</div>';
-    
+        $content.='<div class="modal fade" id="deletequestion">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Serious Question</h4>
+      </div>
+      <div class="modal-body">
+        <p>Do you really want do delete this entry from the database?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary" id="yesdel">Yes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->';
     
     return $content;
 }
@@ -126,7 +75,7 @@ if(isset($_POST["username"])) {
         //user einloggen
         $expire=(isset($_POST["stay"]) && $_POST["stay"]=="yes") ? time()+60*60*24*7:0;
         setcookie("username", $_POST["username"], $expire);
-        $content.=overview($_POST["username"]);
+        $content=overview($_POST["username"]);
     }
     else
     {
@@ -135,33 +84,16 @@ if(isset($_POST["username"])) {
 }
 elseif(isset($_COOKIE["username"]) && ctype_alnum($_COOKIE["username"])) {
     //ist schon eingeloggt
-    $content.=overview($_COOKIE["username"]);
+    $content=overview($_COOKIE["username"]);
 }
 else
 {
-    $content.="<title>Error</title></head><body><h1>Something went wrong.</h1>";
+    $content="<head><title>Error</title></head><body><h1>Something went wrong.</h1>";
 }
 
-$content.='    <footer class="footer">
-      <div class="container">
-        <p class="text-muted">Created by Alwin Ebermann</p>
-      </div>
-    </footer>
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/jquery-1.11.2.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/trumbowyg/dist/trumbowyg.min.js"></script>
-  </body>
-</html>
-
-';
+$content.=createfooter();
+$content.=createend();
 
 //Ausgabe des Inhalts
 echo $content;
-mysql_close();
 ?>
