@@ -1,8 +1,11 @@
 <?php
 include("../mysqlc.php");
+include("functions.inc.php");
 
-if(isset($_COOKIE["username"]) && ctype_alnum($_COOKIE["username"]) && isset($_POST["name"])) {
-    $query="SELECT id FROM `audios` WHERE username='" . mysql_real_escape_string($_COOKIE["username"]) . "' AND name='" . mysql_real_escape_string($_POST["name"]) . "'";
+$user=  checklogin();
+
+if($user["is_logged_in"] && isset($_POST["name"])) {
+    $query="SELECT id FROM `audios` WHERE username='" . mysql_real_escape_string($user["username"]) . "' AND name='" . mysql_real_escape_string($_POST["name"]) . "'";
     $result=  mysql_query($query);
     if($result) {
         $result=  mysql_fetch_array($result);

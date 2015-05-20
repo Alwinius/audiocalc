@@ -22,7 +22,8 @@ $(document).ready(function(){
                     }
                     else
                     {
-                        alert("Fehler beim Eintragen der Daten.");
+                        alert(data);
+//                        alert("Error writing data.");
                     }
                 });
             }

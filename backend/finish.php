@@ -1,8 +1,10 @@
 <?php
 include("../mysqlc.php");
+include("functions.inc.php");
+$user=  checklogin();
 
-if(isset($_POST["action"]) && $_POST["action"]=="finish" &&  ctype_alnum($_COOKIE["username"])) {
-    $query="SELECT * FROM audios WHERE username = '" . $_COOKIE["username"] . "' AND name= '" . mysql_real_escape_string($_POST["name"])  . "';";
+if($user["is_logged_in"] && $_POST["action"]=="finish") {
+    $query="SELECT * FROM audios WHERE username = '" . mysql_real_escape_string($user["username"]) . "' AND name= '" . mysql_real_escape_string($_POST["name"])  . "';";
     $result= mysql_query($query);
     if(!$result) {
         echo 0;
@@ -20,7 +22,7 @@ if(isset($_POST["action"]) && $_POST["action"]=="finish" &&  ctype_alnum($_COOKI
     }
 }
 elseif(isset($_POST["action"]) && $_POST["action"]=="unfinish") {
-    $query="SELECT * FROM audios WHERE username = '" . $_COOKIE["username"] . "' AND name= '" . mysql_real_escape_string($_POST["name"])  . "';";
+    $query="SELECT * FROM audios WHERE username = '" . mysql_real_escape_string($user["username"]) . "' AND name= '" . mysql_real_escape_string($_POST["name"])  . "';";
     $result= mysql_query($query);
     if(!$result) {
         echo 0;

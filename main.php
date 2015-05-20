@@ -3,21 +3,22 @@
 include("mysqlc.php");
 include("backend/functions.inc.php");
 
+//first we check the login
+$user=  checklogin();
 
-
-function overview($username) {
-    $content=  createhead($_COOKIE["username"]);
+if($user["is_logged_in"]) {
+    $content=createhead($user["username"]);
     $content.=createnav("dash");
     $content.='<!-- Begin page content -->
     <div class="container">
       <div class="page-header">
         <h1>Dashboard</h1>
       </div>
-      <p class="lead">Welcome, ' . $username . ' <br/></p>';
+      <p class="lead">Welcome, ' . $user["username"] . ' <br/></p>';
     
     $content.='<h2>Worklog</h2><p>That\'s what you\'ve done so far:</p>';
     $content.='<p><table class="table table-striped audiolist"><thead><tr><th>&nbsp;&nbsp;&nbsp;Name</th><th>&nbsp;&nbsp;&nbsp;Duration</th><th>Worked Time</th><th>Finished (Hourly Rate - Date)</th><th>Actions</th></tr></thead><tbody>';
-    $query="SELECT * FROM audios WHERE username = '" . $username . "' ORDER BY id ASC;";
+    $query="SELECT * FROM audios WHERE username = '" . mysql_real_escape_string($user["username"]) . "' ORDER BY id ASC;";
     $result=  mysql_query($query);
     while ($row = mysql_fetch_array($result)) {
         $entry=1;
@@ -33,7 +34,7 @@ function overview($username) {
                     . ' title="Delete From Database"/></a>';
         }    
         else {
-            $content.='<img src="icons/crossout.png" alt="no"/></td><td><a href="" class="finishlink"><img src="icons/forward.png" alt="Finish" title="Finish"/></a> <a href="#" class="editlink"><img src="icons/pensil.png" alt="Continue With This File"'
+            $content.='<img src="icons/crossout.png" alt="no"/></td><td><a href="#" class="finishlink"><img src="icons/forward.png" alt="Finish" title="Finish"/></a> <a href="#" class="editlink"><img src="icons/pensil.png" alt="Continue With This File"'
                     . ' title="Continue With This File"/></a>';
         }
         $content.='</td></tr>';
@@ -65,35 +66,21 @@ function overview($username) {
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->';
+    $content.=createfooter();
+    $content.=createend();
     
-    return $content;
+    echo $content;
+        
+}
+else {
+    $content=createhead("Error");
+    $content.=createnav("dash");
+    $content.='<div class="container">
+      <div class="page-header"><h1>No, this is not allowed!</h1></div></div>';
+    $content.=createfooter();
+    $content.=createend();
+    
+    echo $content;
 }
 
-if(isset($_POST["username"])) {
-    if(ctype_alnum($_POST["username"]))
-    {
-        //user einloggen
-        $expire=(isset($_POST["stay"]) && $_POST["stay"]=="yes") ? time()+60*60*24*7:0;
-        setcookie("username", $_POST["username"], $expire);
-        $content=overview($_POST["username"]);
-    }
-    else
-    {
-        $content.="<title>Error</title></head><body><h1>You can only use letters and numbers for your username.</h1>";
-    }
-}
-elseif(isset($_COOKIE["username"]) && ctype_alnum($_COOKIE["username"])) {
-    //ist schon eingeloggt
-    $content=overview($_COOKIE["username"]);
-}
-else
-{
-    $content="<head><title>Error</title></head><body><h1>Something went wrong.</h1>";
-}
-
-$content.=createfooter();
-$content.=createend();
-
-//Ausgabe des Inhalts
-echo $content;
 ?>
