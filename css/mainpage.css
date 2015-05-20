@@ -1,0 +1,82 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 160px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+body > .container:first-of-type {
+  padding: 60px 15px 0;
+}
+.container .text-muted {
+  margin: 20px 0;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+/*new css*/
+
+#duration {
+    width: 100px;
+}
+
+#name {
+    width: 200px;
+}
+
+.overview {
+    background-color: #eee;
+    margin: 15px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.25);
+    border-radius: 10px;
+}
+
+.quote {
+    margin: 20px;
+}
+
+.dashboard .row {
+    margin: 10px;
+}
+
+.dashboard .btn {
+    margin-left: 10px;
+}
+
+.buttonrow {
+    text-align: center;
+}
+
+.notepad p {
+    margin: 0px;
+    padding: 0px;
+}
+
+.audiolist td {
+    padding-left: 20px !important;
+}
+
+.audiolist input {
+    margin-left: -12px;
+}

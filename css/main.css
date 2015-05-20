@@ -1,0 +1,88 @@
+.date{
+    text-decoration: underline;
+    color:white;
+    font-weight: bold;
+    padding: 4px;
+    font-size: 12pt;
+    background-color: black;
+    float: left;
+}	
+
+.anz-form {
+    display: inline !important;
+    width: 30px;
+}
+
+.day {
+    background-color:white; 
+    margin-bottom:10px;
+}
+
+.tdborder{
+    border: 3px solid red;
+}
+
+.mealimg {
+    height: 135px;
+}
+
+#weeknav {
+    display: inline-block;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#all {
+    text-align: center;
+}
+
+#meals {
+    text-align: left;
+}
+
+.meal {
+    min-height: 230px;
+    margin: 3px;
+}
+.star {
+    width: 20px;
+    height: 20px;  
+    margin-bottom:5px;
+}
+
+.jumbotron {
+    color:white; 
+    background-color: rgba(0, 0, 0, 1); 
+    box-shadow: 0px 5px 9px 5px #000;
+    border-radius: 5px;
+}
+
+#main {
+    padding: 80px 20px 40px 20px;
+    background-color: rgba(43, 120, 36, 0.9);
+}
+
+.masthead {
+    padding: 10px;
+}
+
+.mealimg {
+    width:180px; 
+}
+
+body {
+    min-width: 400px;
+}
+
+.navbar-right .btn {
+    margin-bottom: 2px;
+}
+.heading {
+    margin: 10px;
+}
+
+.infobox {
+    margin-top: 20px;
+    padding: 20px;
+    font-size: 12pt;
+}
