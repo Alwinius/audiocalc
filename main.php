@@ -34,13 +34,13 @@ if($user["is_logged_in"]) {
                     . ' title="Delete From Database"/></a>';
         }    
         else {
-            $content.='<img src="icons/crossout.png" alt="no"/></td><td><a href="#" class="finishlink"><img src="icons/forward.png" alt="Finish" title="Finish"/></a> <a href="#" class="editlink"><img src="icons/pensil.png" alt="Continue With This File"'
+            $content.='<img src="icons/crossout.png" alt="no"/></td><td><a href="#" class="finishlink"><img src="icons/forward.png" alt="Finish" title="Finish"/></a> <a href="#workplace" class="editlink"><img src="icons/pensil.png" alt="Continue With This File"'
                     . ' title="Continue With This File"/></a>';
         }
         $content.='</td></tr>';
     }
     $content.='<tr id="lastrow"><td><label class="sr-only" for="name">Name</label><input type="text" class="form-control" id="name" name="name" placeholder="T_IW32MT" data-content="Only letters, numbers and _ please." data-placement="bottom"/></td>';
-    $content.='<td><label class="sr-only" for="duration">Duration</label><input type="text" class="form-control" id="duration" name="duration" placeholder="hh:mm:ss" maxlength="8" data-content="That\'s not a valid duration." data-placement="bottom"></td><td>00:00:00</td><td><img src="icons/crossout.png" alt="no"/></td><td><a href="#" id="savelink"><img src="icons/save_alt.png" alt="save" title="Save"/></a></td></tr></tbody></table></p></div>';
+    $content.='<td><label class="sr-only" for="duration">Duration</label><input type="text" class="form-control" id="duration" name="duration" placeholder="hh:mm:ss" maxlength="8" data-content="That\'s not a valid duration." data-placement="bottom"></td><td>00:00:00</td><td><img src="icons/crossout.png" alt="no"/></td><td><a href="#" id="savelink"><img src="icons/save_alt.png" alt="save" title="Save"/></a><a name="workplace"></a></td></tr></tbody></table></p></div>';
     
     $content.='<div class="container"><h2>Workplace</h2>';
     $content.='<p class="quote lead"></p>';

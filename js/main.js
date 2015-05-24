@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    $('#savelink').focus();
     dash=new dashboard();
     note=new notepad();
     $('.notepad').trumbowyg({
@@ -7,34 +8,33 @@ $(document).ready(function(){
         btns: ['btnGrp-design', '|', 'btnGrp-lists', '|', 'link', 'formatting']
     });
     $("#savelink").click(function() {
-        //Eintrag hinzufügen
-        if(checkduration()) {
-            if(checkname()) {
-                //jetzt kommt Ajax ins Spiel
-                $.post("backend/addaudio.php", {name: $("#name").val(), duration: $("#duration").val()}, function(data) {
-                    if(data==1) {
-                        //jetzt neue Zeile in Tabelle einfügen und Felder cleanen
-                        var duration=$("#duration").val().split(":");
-                        var dur="0"+duration[0].slice(-2);
-                        $("<tr><td>"+$("#name").val()+"</td><td>"+dur+":"+duration[1]+":"+duration[2]+"</td><td>00:00:00</td><td><img src=\"icons/crossout.png\" alt=\"no\"/></td><td>"+'<a href="#" class="finishlink"><img src="icons/forward.png" alt="Finish" title="Finish"/></a> <a href="#" class="editlink"><img src="icons/pensil.png" alt="Continue With This File" title="Continue With This File"/></a>'+"</td></tr>").insertBefore($("#lastrow"));
-                        $("#name").val("");
-                        $("#duration").val("");
-                    }
-                    else
-                    {
-                        alert(data);
-//                        alert("Error writing data.");
-                    }
-                });
+        addaudio();
+    });
+    $(document).keypress(function(e) {
+        if ((e.keyCode || e.which) === 13) {
+            // Enter key pressed
+            addaudio();
+        }
+    });
+    $(document).keypress(function(e) {
+        if ((e.keyCode || e.which) === 32) {
+            // Space key pressed
+            e.preventDefault();
+            if(dash.getState()==="disabled") {
+                dash.continuet();
             }
-            else
-            {
-                $("#name").popover("show");
+            else if (dash.getState()==="enabled") {
+                dash.pause();
             }
         }
-        else
-        {
-            $("#duration").popover("show");
+    });
+    $(document).keypress(function(e) {
+        if ((e.keyCode || e.which) === 27) {
+            // Space key pressed
+            e.preventDefault();
+            if(dash.getState()==="disabled"|dash.getState()==="enabled") {
+                dash.stop();
+            }
         }
     });
     $("#name").change(function() {
@@ -116,6 +116,7 @@ $(document).ready(function(){
         dash.start();
     });
     $(".pauseb").click(function() {
+        this.blur();
         if(dash.getState()==="disabled") {
             dash.continuet();
         }
@@ -124,6 +125,7 @@ $(document).ready(function(){
         }
     });
     $(".stopb").click(function() {
+        this.blur();
         dash.stop();
     });
     $('.trumbowyg').on('tbwchange', function() {
@@ -155,11 +157,42 @@ function checkduration() {
    }
 }
 
+function addaudio() {
+    //Eintrag hinzufügen
+    if(checkduration()) {
+        if(checkname()) {
+            //jetzt kommt Ajax ins Spiel
+            $.post("backend/addaudio.php", {name: $("#name").val(), duration: $("#duration").val()}, function(data) {
+                if(data==1) {
+                    //jetzt neue Zeile in Tabelle einfügen und Felder cleanen
+                    var duration=$("#duration").val().split(":");
+                    var dur=("0"+duration[0]).slice(-2);
+                    $("<tr><td>"+$("#name").val()+"</td><td>"+dur+":"+duration[1]+":"+duration[2]+"</td><td>00:00:00</td><td><img src=\"icons/crossout.png\" alt=\"no\"/></td><td>"+'<a href="#" class="finishlink"><img src="icons/forward.png" alt="Finish" title="Finish"/></a> <a href="#" class="editlink"><img src="icons/pensil.png" alt="Continue With This File" title="Continue With This File"/></a>'+"</td></tr>").insertBefore($("#lastrow"));
+                    $("#name").val("");
+                    $("#duration").val("");
+                }
+                else
+                {
+                    alert("Error writing data.");
+                }
+            });
+        }
+        else
+        {
+            $("#name").popover("show");
+        }
+    }
+    else
+    {
+        $("#duration").popover("show");
+    }
+}
+
 var dashboard = function() {
     var sincebreak;
     var time;   
     var entry;
-    var state;
+    var state="empty";
     var interval;
     var name;
     var lastup=0;
@@ -197,7 +230,7 @@ var dashboard = function() {
     this.stop=function() {
         this.sincebreak=0;
         clearInterval(this.interval);
-        this.state="disabled";
+        this.state="empty";
         $('.dashboard .btn').addClass('disabled');
         $(this.entry).parent().parent().removeClass('success');
         $('.hourglas').attr('src', 'icons/hourglas_stop.png');
@@ -206,6 +239,7 @@ var dashboard = function() {
         this.time=0;
         this.name="None";
         updatescreen();
+        window.scrollTo(0,0);
     };
     this.pause=function() {
         updateserver();
