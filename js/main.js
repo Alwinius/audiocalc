@@ -11,11 +11,11 @@ $(document).ready(function(){
         addaudio();
     });
     $(document).keydown(function(e) {
-        if ((e.keyCode || e.which) === 13) {
+        if (((e.keyCode || e.which) === 13) && !$(".notepad").is(":focus")) {
             // Enter key pressed
             addaudio();
         }
-        else if ((e.keyCode || e.which) === 32) {
+        else if (((e.keyCode || e.which) === 32) && !$(".notepad").is(":focus")) {
             // Space key pressed
             e.preventDefault();
             if(dash.getState()==="disabled") {
@@ -25,7 +25,7 @@ $(document).ready(function(){
                 dash.pause();
             }
         }
-        else if ((e.keyCode || e.which) === 27) {
+        else if (((e.keyCode || e.which) === 27) && !$(".notepad").is(":focus")) {
             // ESC key pressed
             e.preventDefault();
             if(dash.getState()==="disabled"|dash.getState()==="enabled") {
