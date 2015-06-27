@@ -15,7 +15,6 @@ if($user["is_logged_in"] && isset($_POST["action"]) && $_POST["action"]=="getmon
         }
     }
     echo json_encode($months);
-    
 }
 elseif ($user["is_logged_in"] && isset($_POST["action"]) && $_POST["action"]=="getmonth" && isset($_POST["month"]) && preg_match("/[A-Za-z]+\ [0-9]{4}/", $_POST["month"])) {
     $first_day=date("Y-m", strtotime($_POST["month"]." -1 month"))."-16 00:00:00";
@@ -33,11 +32,3 @@ else {
     echo 0;
 }
 
-function getmonth($timestamp) {
-    if(date("j", strtotime($timestamp))>15) {
-        return date("F Y", strtotime($timestamp . " +1 month"));
-    }
-    else {
-        return date("F Y", strtotime($timestamp));
-    }
-}
