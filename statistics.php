@@ -10,12 +10,22 @@ function stats($username) {
     <div class="container">
       <div class="page-header">
         <h1>Statistics</h1>
-      </div>
-      <p class="lead">Welcome, ' . $username . ' <br/></p>';
+      </div>';
     
-    $content.='<h2>Worklog</h2><p>That\'s what you\'ve done so far:</p>';
-
-    $content.= '</div>';
+    $content.='<h2>Work by month</h2><form class="form-inline"><div class="form-group">That\'s what you\'ve done so far in &nbsp;<select class="form-control input-sm monthsel">'
+            . '<option>Current Month</option></select>:</div></form>';
+    $content.='<p>Notice: A month here goes from the 16th of the previous month to the 15th of this month.</p>';
+    $content.='<table class="table table-striped audiolist"><thead><tr><th>Name</th><th>Duration</th><th>Worked Time</th><th>Hourly Rate</th><th>Total pay</th><th>Finished</th></tr></thead><tbody>';
+    
+    $content.='</tbody></table>';
+    $content.='<div class="container monthavg"><div class="row"><div class="col-xs-6">Total income for this month (before tax) is: </div><div class="col-xs-6"><img src="icons/coin_gold.png"/> <span class="total"></span></div></div>'
+            . '<div class="row"><div class="col-xs-6">Total work hours this month: </div><div class="col-xs-6"><img src="icons/alarmclock.png"/> <span class="totalhrs"></span></div></div>'
+            . '<div class="row"><div class="col-xs-6">Average hourly rate: </div><div class="col-xs-6"><img src="icons/coin_gold.png"/>/<img src="icons/alarmclock.png"/> <span class="avgrate"></span></div>';
+    $content.= '</div></div>';
+    
+//    $content.='<h2>Overall statistics</h2><p>Everything you\'ve done in your life.</p>';
+    
+    $content.='</div>';
     
     
     return $content;
@@ -31,7 +41,7 @@ else
 }
 
 $content.=createfooter();
-$content.=createend();
+$content.=createend("stats");
 
 //Ausgabe des Inhalts
 echo $content;

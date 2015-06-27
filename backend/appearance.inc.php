@@ -46,12 +46,12 @@ function createnav($sel) {
     else {
         $content.='<li><a href="main.php">Dashboard</a></li>';
     }
-//    if($sel==="stats") {
-//        $content.='<li class="active"><a href="#">Statistics</a></li>';
-//    }
-//    else {
-//        $content.='<li><a href="statistics.php">Statistics</a></li>';
-//    }
+    if($sel==="stats") {
+        $content.='<li class="active"><a href="#">Statistics</a></li>';
+    }
+    else {
+        $content.='<li><a href="statistics.php">Statistics</a></li>';
+    }
 //    if($sel==="acc") {
 //        $content.='<li class="active"><a href="#">Account Settings</a></li>';
 //    }
@@ -81,14 +81,23 @@ function createfooter() {
     return $content;
 }
 
-function createend() {
+function createend($page) {
     $content='    <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery-1.11.2.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/trumbowyg/dist/trumbowyg.min.js"></script>
+    <script src="js/functions.inc.js"></script>
+    <script src="js/trumbowyg/dist/trumbowyg.min.js"></script>';
+    switch ($page) {
+    case "main":
+        $content.='<script src="js/main.js"></script>';
+        break;
+    case "stats":
+        $content.='<script src="js/stats.js"></script>';
+        break;
+    }
+    $content.='
   </body>
 </html>';
     mysql_close();

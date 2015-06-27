@@ -67,7 +67,7 @@ if($user["is_logged_in"]) {
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->';
     $content.=createfooter();
-    $content.=createend();
+    $content.=createend("main");
     
     echo $content;
         

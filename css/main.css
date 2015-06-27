@@ -81,3 +81,7 @@ body {
 .page-header {
     margin-top: 80px;
 }
+
+.monthavg .row {
+    margin: 7px;
+}
