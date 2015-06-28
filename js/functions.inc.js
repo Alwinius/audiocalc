@@ -58,7 +58,7 @@ $(document).ready(function(){
                 var b=parent.children().first().next().text().split(':');
                 var pay=((+b[0]) * 60 * 60 + (+b[1]) * 60 + (+b[2]))*56/3600;
                 var payh=pay/wtime*3600;
-                parent.children().last().prev().html("<img src=\"icons/valid.png\" alt=\"yes\"/> (<img src=\"icons/coin_gold.png\"/> " + Math.round(payh * 100) / 100 + "€/h - "+data+")");
+                parent.children().last().prev().html("<img src=\"icons/valid.png\" alt=\"yes\"/> (<img src=\"icons/coin_gold.png\"/> " + (Math.round(payh * 100) / 100).toFixed(2) + "€/h - "+data+")");
                 parent.children().last().html('<a href="#" class="unfinishlink"><img src="icons/back.png" alt="Unfinish" title="Unfinish"/></a> <a href="#" class="deletelink"><img src="icons/del.png" alt="Delete from Database" title="Delete From Database"/></a>');
             }
             else

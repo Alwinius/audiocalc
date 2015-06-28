@@ -23,7 +23,14 @@ function stats($username) {
             . '<div class="row"><div class="col-xs-6">Average hourly rate: </div><div class="col-xs-6"><img src="icons/coin_gold.png"/>/<img src="icons/alarmclock.png"/> <span class="avgrate"></span></div>';
     $content.= '</div></div>';
     
-//    $content.='<h2>Overall statistics</h2><p>Everything you\'ve done in your life.</p>';
+    $content.='<h2>Overall statistics</h2><p>Everything you\'ve done in your life.</p>';
+    $query=mysql_query("SELECT ROUND(SUM(TIME_TO_SEC(wduration))/3600, 2) AS wduration, ROUND(SUM(TIME_TO_SEC(duration))/3600, 2) AS duration FROM `audios` WHERE username='" . $username . "' AND finished=1 GROUP BY username ORDER BY id ASC;");
+    $result=  mysql_fetch_array($query);
+    $content.='<div class="container monthavg"><div class="row"><div class="col-xs-6">Total income (before tax) is: </div><div class="col-xs-6"><img src="icons/coin_gold.png"/> ' . number_format($result["duration"]*56, 2) . '€</div></div>'
+            . '<div class="row"><div class="col-xs-6">Total work hours: </div><div class="col-xs-6"><img src="icons/alarmclock.png"/> ' . number_format($result["wduration"], 2) . 'h</div></div>'
+            . '<div class="row"><div class="col-xs-6">Total hours of edited audios: </div><div class="col-xs-6"><img src="icons/alarmclock.png"/> ' . number_format($result["duration"], 2) . 'h</div></div>'
+            . '<div class="row"><div class="col-xs-6">Average hourly rate: </div><div class="col-xs-6"><img src="icons/coin_gold.png"/>/<img src="icons/alarmclock.png"/> ' . number_format(($result["duration"]*56)/$result["wduration"], 2) . '€/h</div>';
+    $content.= '</div></div>';
     
     $content.='</div>';
     

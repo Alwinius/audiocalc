@@ -37,7 +37,7 @@ if($user["is_logged_in"]) {
             $wtime=strtotime("1970-01-01 $wtime UTC");
             $wtime=($wtime==0) ? 1:$wtime; 
             $payh =$pay/$wtime*3600;
-            $content.='<img src="icons/valid.png" alt="yes"/> (<img src="icons/coin_gold.png"/> ' . round($payh, 2) . '€/h - ' . date("d.m.Y", strtotime($row["created"])) . ')</td><td><a href="#" class="unfinishlink"><img src="icons/back.png" alt="Unfinish" title="Unfinish"/></a> <a href="#" class="deletelink"><img src="icons/del.png" alt="Delete from Database"'
+            $content.='<img src="icons/valid.png" alt="yes"/> (<img src="icons/coin_gold.png"/> ' . number_format($payh, 2) . '€/h - ' . date("d.m.Y", strtotime($row["created"])) . ')</td><td><a href="#" class="unfinishlink"><img src="icons/back.png" alt="Unfinish" title="Unfinish"/></a> <a href="#" class="deletelink"><img src="icons/del.png" alt="Delete from Database"'
                     . ' title="Delete From Database"/></a>';
         }    
         else {

@@ -34,14 +34,14 @@ $(document).ready(function(){
                 totalwtime+=wtime;
                 var payh=pay/wtime*3600;
                 total+=pay;
-                $('.audiolist tbody').append("<tr><td>"+entries[index]["name"]+"</td><td>"+entries[index]["duration"]+"</td><td>"+entries[index]["wduration"]+"</td><td><img src=\"icons/coin_gold.png\"/>/<img src=\"icons/alarmclock.png\"/> "+Math.round(payh * 100) / 100
-                        +"€</td><td><img src=\"icons/coin_gold.png\"/> "+Math.round(pay * 100) / 100+"€</td><td>"+entries[index]["created"]+"</td></tr>");
+                $('.audiolist tbody').append("<tr><td>"+entries[index]["name"]+"</td><td>"+entries[index]["duration"]+"</td><td>"+entries[index]["wduration"]+"</td><td><img src=\"icons/coin_gold.png\"/>/<img src=\"icons/alarmclock.png\"/> "+(Math.round(payh * 100) / 100).toFixed(2)
+                        +"€</td><td><img src=\"icons/coin_gold.png\"/> "+(Math.round(pay * 100) / 100).toFixed(2)+"€</td><td>"+entries[index]["created"]+"</td></tr>");
             }
-            total=Math.round(total * 100) / 100;
-            totalwtime=Math.round(totalwtime/3600 * 100) / 100;
+            total=(Math.round(total * 100) / 100).toFixed(2);
+            totalwtime=(Math.round(totalwtime/3600 * 100) / 100).toFixed(2);
             $('.total').text(total+"€");
             $('.totalhrs').text(totalwtime+"h");
-            $('.avgrate').text(Math.round(total/totalwtime * 100) / 100+"€/h");
+            $('.avgrate').text((Math.round(total/totalwtime * 100) / 100).toFixed(2)+"€/h");
         });  
     }
     $('.monthsel').on('change', function() {        
