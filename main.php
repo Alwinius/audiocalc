@@ -23,7 +23,7 @@ if($user["is_logged_in"]) {
         $first_day=date("Y-m")."-16 00:00:00";;
     }
     else {
-        $first_day=date("Y-m", "now -1 month")."-16 00:00:00";
+        $first_day=date("Y-m", strtotime("now -1 month"))."-16 00:00:00";
     }
     $query="SELECT * FROM audios WHERE username = '" . mysql_real_escape_string($user["username"]) . "' AND (created > \"$first_day\" OR finished = 0) ORDER BY id ASC;";
     $result=  mysql_query($query);
