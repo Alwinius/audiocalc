@@ -85,7 +85,7 @@ else {
     $content.='<div class="container">
       <div class="page-header"><h1>No, this is not allowed!</h1></div></div>';
     $content.=createfooter();
-    $content.=createend();
+    $content.=createend('main');
     
     echo $content;
 }
